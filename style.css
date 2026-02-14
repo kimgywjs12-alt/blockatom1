@@ -202,3 +202,9 @@ body.dark-mode #generate-btn:hover {
 body.dark-mode .contact-form button[type="submit"]:hover {
     background-color: oklch(70% 0.25 300);
 }
+
+.ad-container {
+    margin: 1.5rem auto;
+    text-align: center;
+}
+
