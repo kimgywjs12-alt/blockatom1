@@ -18,6 +18,24 @@ body {
     border-radius: 1rem;
     background-color: var(--card-background-color);
     box-shadow: var(--card-shadow);
+    position: relative; /* Added for absolute positioning of back button */
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: oklch(70% 0.25 260);
 }
 
 h1 {
