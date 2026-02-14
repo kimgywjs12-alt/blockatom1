@@ -43,7 +43,7 @@ generateBtn.addEventListener('click', () => {
 
 function generateLottoNumbers() {
     const numbers = new Set();
-    while (numbers.size < 6) {
+    while (numbers.size < 5) { // Changed from 6 to 5
         const randomNumber = Math.floor(Math.random() * 45) + 1;
         numbers.add(randomNumber);
     }
