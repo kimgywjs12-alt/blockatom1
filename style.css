@@ -3,6 +3,17 @@
     --secondary-color: oklch(85% 0.15 260);
     --background-color: oklch(98% 0.02 260);
     --text-color: oklch(20% 0.02 260);
+    --card-background-color: white;
+    --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --primary-color: oklch(65% 0.25 300);
+    --secondary-color: oklch(85% 0.15 300);
+    --background-color: oklch(20% 0.02 300);
+    --text-color: oklch(98% 0.02 300);
+    --card-background-color: oklch(30% 0.02 300);
+    --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -14,6 +25,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -23,11 +35,12 @@ body {
 }
 
 .lotto-machine {
-    background-color: white;
+    background-color: var(--card-background-color);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-shadow);
     margin-bottom: 2rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .number-display {
@@ -65,11 +78,16 @@ body {
     background-color: oklch(70% 0.25 260);
 }
 
+body.dark-mode #generate-btn:hover {
+    background-color: oklch(70% 0.25 300);
+}
+
 .history {
-    background-color: white;
+    background-color: var(--card-background-color);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #history-list {
@@ -81,8 +99,73 @@ body {
 #history-list li {
     padding: 1rem;
     border-bottom: 1px solid var(--secondary-color);
+    display: flex; /* Added for flexbox alignment */
+    justify-content: center; /* Added for flexbox alignment */
+    gap: 10px; /* Added for spacing between balls */
+}
+
+#history-list li .lotto-ball {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
 }
 
 #history-list li:last-child {
     border-bottom: none;
+}
+
+/* Theme Switch Styles */
+.theme-switch-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    position: absolute;
+    transition: 0.4s;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: 0.4s;
+    width: 26px;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }

@@ -16,6 +16,25 @@ customElements.define('lotto-ball', LottoBall);
 const generateBtn = document.getElementById('generate-btn');
 const numberDisplay = document.querySelector('.number-display');
 const historyList = document.getElementById('history-list');
+const themeToggle = document.getElementById('checkbox');
+
+// Theme switching logic
+function setTheme(theme) {
+    document.body.classList.toggle('dark-mode', theme === 'dark');
+    localStorage.setItem('theme', theme);
+}
+
+themeToggle.addEventListener('change', (event) => {
+    setTheme(event.target.checked ? 'dark' : 'light');
+});
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme') || 'light';
+if (savedTheme === 'dark') {
+    themeToggle.checked = true;
+}
+setTheme(savedTheme);
+
 
 generateBtn.addEventListener('click', () => {
     const numbers = generateLottoNumbers();
@@ -29,7 +48,7 @@ function generateLottoNumbers() {
         const randomNumber = Math.floor(Math.random() * 45) + 1;
         numbers.add(randomNumber);
     }
-    return Array.from(numbers);
+    return Array.from(numbers).sort((a, b) => a - b);
 }
 
 function displayNumbers(numbers) {
@@ -43,6 +62,17 @@ function displayNumbers(numbers) {
 
 function addHistory(numbers) {
     const listItem = document.createElement('li');
-    listItem.textContent = numbers.join(', ');
+    
+    // Create a div to hold the lotto balls for history
+    const historyNumbersDiv = document.createElement('div');
+    historyNumbersDiv.classList.add('history-numbers');
+
+    numbers.forEach(number => {
+        const lottoBall = document.createElement('lotto-ball');
+        lottoBall.setAttribute('number', number);
+        historyNumbersDiv.appendChild(lottoBall);
+    });
+
+    listItem.appendChild(historyNumbersDiv);
     historyList.prepend(listItem);
 }
