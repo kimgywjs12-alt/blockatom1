@@ -1,16 +1,15 @@
 // Teachable Machine model URL
 const URL = "https://teachablemachine.withgoogle.com/models/vzIPAnZ10/";
 
-let model, webcam, maxPredictions;
+let model, maxPredictions;
 let playerChoiceDisplay, computerChoiceDisplay, outcomeDisplay;
 let playerScoreDisplay, computerScoreDisplay, drawScoreDisplay;
-let startGameBtn;
+let imageUpload, uploadedImage, canvas, ctx, predictBtn;
 
 let playerScore = 0;
 let computerScore = 0;
 let drawScore = 0;
-let isGameRunning = false;
-let canMakeMove = true; // To prevent rapid-fire predictions
+let isImageLoaded = false;
 
 // Initialize the game
 async function init() {
@@ -21,13 +20,6 @@ async function init() {
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
-    // Setup webcam
-    const flip = true; // whether to flip the webcam
-    webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-    await webcam.setup(); // request access to the webcam
-    await webcam.play();
-    window.requestAnimationFrame(loop);
-
     // Get elements
     playerChoiceDisplay = document.getElementById("player-choice");
     computerChoiceDisplay = document.getElementById("computer-choice");
@@ -35,52 +27,87 @@ async function init() {
     playerScoreDisplay = document.getElementById("player-score");
     computerScoreDisplay = document.getElementById("computer-score");
     drawScoreDisplay = document.getElementById("draw-score");
-    startGameBtn = document.getElementById("start-game-btn");
+    imageUpload = document.getElementById("image-upload");
+    uploadedImage = document.getElementById("uploaded-image");
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+    predictBtn = document.getElementById("predict-btn");
 
-    // Add webcam to the DOM
-    document.getElementById("webcam").appendChild(webcam.canvas);
+    imageUpload.addEventListener('change', handleImageUpload);
+    predictBtn.addEventListener('click', predictAndPlay);
 
-    startGameBtn.addEventListener('click', startGame);
     updateScoreDisplay();
 }
 
-async function loop() {
-    webcam.update(); // update the webcam frame
-    if (isGameRunning && canMakeMove) {
-        await predict();
+async function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImage.src = e.target.result;
+            uploadedImage.style.display = 'block';
+            playerChoiceDisplay.textContent = "Image loaded, ready to predict!";
+            isImageLoaded = true;
+            predictBtn.disabled = false; // Enable predict button
+        };
+        reader.readAsDataURL(file);
+    } else {
+        uploadedImage.src = "#";
+        uploadedImage.style.display = 'none';
+        playerChoiceDisplay.textContent = "Waiting for image...";
+        isImageLoaded = false;
+        predictBtn.disabled = true; // Disable predict button if no image
     }
-    window.requestAnimationFrame(loop);
+    outcomeDisplay.textContent = "Upload an image to play!";
+    computerChoiceDisplay.textContent = "Waiting...";
 }
 
-// Predict user's hand gesture
-async function predict() {
-    const prediction = await model.predict(webcam.canvas);
+async function predictAndPlay() {
+    if (!isImageLoaded) {
+        alert("Please upload an image first!");
+        return;
+    }
+
+    // Set canvas dimensions to match model input (e.g., 224x224 for TM Image models)
+    const size = 224; // Teachable Machine models typically expect 224x224
+    canvas.width = size;
+    canvas.height = size;
+
+    // Draw the uploaded image onto the canvas, scaling it to fit
+    ctx.drawImage(uploadedImage, 0, 0, size, size);
+
+    predictBtn.disabled = true; // Disable button during prediction
+    playerChoiceDisplay.textContent = "Predicting...";
+
+    const prediction = await model.predict(canvas);
     let maxProbability = 0;
     let playerMove = "Waiting...";
 
     for (let i = 0; i < maxPredictions; i++) {
-        const classPrediction =
-            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        const classPrediction = prediction[i].className;
         
-        if (prediction[i].probability > maxProbability && prediction[i].className !== "Background") {
+        // Exclude "Background" class if present in your model and not a valid move
+        if (prediction[i].probability > maxProbability && classPrediction !== "Background") {
             maxProbability = prediction[i].probability;
-            playerMove = prediction[i].className;
+            playerMove = classPrediction;
         }
     }
 
-    playerChoiceDisplay.textContent = playerMove;
-
-    // Only proceed with game logic if prediction is confident enough and not "Waiting..."
-    if (maxProbability > 0.8 && playerMove !== "Background" && playerMove !== "Waiting...") { // Adjust confidence threshold if needed
-        canMakeMove = false; // Disable further moves until round is over
+    // Only consider predictions above a certain confidence threshold
+    if (maxProbability > 0.7) { // Adjust confidence threshold if needed
+        playerChoiceDisplay.textContent = playerMove;
         playRound(playerMove);
-        setTimeout(() => canMakeMove = true, 2000); // Wait 2 seconds before allowing next move
+    } else {
+        playerChoiceDisplay.textContent = "Could not confidently determine move.";
+        outcomeDisplay.textContent = "Please upload a clearer image.";
+        computerChoiceDisplay.textContent = "Waiting...";
     }
+    predictBtn.disabled = false; // Re-enable predict button
 }
 
 // Game logic
 function generateComputerChoice() {
-    const choices = ["Rock", "Paper", "Scissors"];
+    const choices = ["Rock", "Paper", "Scissors"]; // Assuming these are the class names from your TM model
     const randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
 }
@@ -112,19 +139,6 @@ function updateScoreDisplay() {
     playerScoreDisplay.textContent = playerScore;
     computerScoreDisplay.textContent = computerScore;
     drawScoreDisplay.textContent = drawScore;
-}
-
-function startGame() {
-    isGameRunning = true;
-    startGameBtn.textContent = "Game Running...";
-    startGameBtn.disabled = true;
-    outcomeDisplay.textContent = "Make your move!";
-    playerChoiceDisplay.textContent = "Waiting...";
-    computerChoiceDisplay.textContent = "Waiting...";
-    playerScore = 0;
-    computerScore = 0;
-    drawScore = 0;
-    updateScoreDisplay();
 }
 
 init();

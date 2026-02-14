@@ -8,12 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Rock Paper Scissors</h1>
+        <h1>Rock Paper Scissors (Image Input)</h1>
         <div class="game-area">
             <div class="player-area">
                 <h2>You</h2>
-                <video id="webcam" autoplay playsinline></video>
-                <div id="player-choice">Waiting...</div>
+                <input type="file" id="image-upload" accept="image/*">
+                <img id="uploaded-image" src="#" alt="Upload your hand gesture" style="display:none;">
+                <canvas id="canvas" style="display:none;"></canvas> <!-- Hidden canvas for model input -->
+                <div id="player-choice">Waiting for image...</div>
             </div>
             <div class="computer-area">
                 <h2>Computer</h2>
@@ -21,10 +23,10 @@
             </div>
         </div>
         <div class="result-area">
-            <p id="outcome">Make your move!</p>
+            <p id="outcome">Upload an image to play!</p>
             <p>Score: You <span id="player-score">0</span> - Computer <span id="computer-score">0</span> (Draws: <span id="draw-score">0</span>)</p>
         </div>
-        <button id="start-game-btn">Start Game</button>
+        <button id="predict-btn">Predict from Image</button>
     </div>
 
     <!-- Teachable Machine model script -->
