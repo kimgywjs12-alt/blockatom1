@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="rps-style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        <div class="game-area">
+            <div class="player-area">
+                <h2>You</h2>
+                <video id="webcam" autoplay playsinline></video>
+                <div id="player-choice">Waiting...</div>
+            </div>
+            <div class="computer-area">
+                <h2>Computer</h2>
+                <div id="computer-choice">Waiting...</div>
+            </div>
+        </div>
+        <div class="result-area">
+            <p id="outcome">Make your move!</p>
+            <p>Score: You <span id="player-score">0</span> - Computer <span id="computer-score">0</span> (Draws: <span id="draw-score">0</span>)</p>
+        </div>
+        <button id="start-game-btn">Start Game</button>
+    </div>
+
+    <!-- Teachable Machine model script -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="rps-main.js"></script>
+</body>
+</html>
