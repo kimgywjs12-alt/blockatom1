@@ -16,24 +16,23 @@ customElements.define('lotto-ball', LottoBall);
 const generateBtn = document.getElementById('generate-btn');
 const numberDisplay = document.querySelector('.number-display');
 const historyList = document.getElementById('history-list');
-const themeToggle = document.getElementById('checkbox');
+const themeToggleText = document.getElementById('theme-toggle-text'); // Changed to themeToggleText
 
 // Theme switching logic
 function setTheme(theme) {
     document.body.classList.toggle('dark-mode', theme === 'dark');
     localStorage.setItem('theme', theme);
+    themeToggleText.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode'; // Update text
 }
 
-themeToggle.addEventListener('change', (event) => {
-    setTheme(event.target.checked ? 'dark' : 'light');
+themeToggleText.addEventListener('click', () => { // Changed event listener
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
 });
 
 // Load saved theme
 const savedTheme = localStorage.getItem('theme') || 'light';
-if (savedTheme === 'dark') {
-    themeToggle.checked = true;
-}
-setTheme(savedTheme);
+setTheme(savedTheme); // Set theme and update text on load
 
 
 generateBtn.addEventListener('click', () => {
