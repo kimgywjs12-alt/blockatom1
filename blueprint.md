@@ -6,13 +6,13 @@ This project will create a web-based Rock-Paper-Scissors game where the user's h
 ## Current Application State
 The current application is a Lotto Number Generator with dark/light mode toggle and a Formspree contact form. This new RPS game is a separate, distinct application. I have created a new `rps.html` file as the entry point for the RPS game, and linked it from `index.html` for easy access. The existing `index.html` and its associated files remain untouched, ensuring minimal disruption to the existing functionality.
 
-## Plan for Current Task: Integrating RPS Game with Teachable Machine (Image Input)
+## Plan for Current Task: Optimizing for AdSense Approval & Adding Informational Pages
 
 ### 1. Create `rps.html` and link it from `index.html` (Completed)
 *   Created `rps.html` to host the RPS game.
 *   Added a link to `rps.html` in `index.html` for navigation.
 
-### 2. Basic HTML Structure for `rps.html` (Modified for Image Input)
+### 2. Basic HTML Structure for `rps.html` (Modified for Image Input, Back Button, and AdSense)
 *   Included necessary meta tags and title.
 *   Linked to `rps-style.css` and `rps-main.js`.
 *   **Replaced `<video>` with `<input type="file" id="image-upload">` and `<img id="uploaded-image">` for image display.**
@@ -22,14 +22,19 @@ The current application is a Lotto Number Generator with dark/light mode toggle 
 *   Elements to display round outcome (Win/Lose/Draw).
 *   Scoreboard (Player Score, Computer Score, Draws).
 *   **Renamed button to `id="predict-btn"` with text "Predict from Image".**
+*   **Added "Back to Lotto" button (`<a href="index.html" id="back-to-lotto" class="back-button">`).**
+*   **Added Google AdSense script to `<head>` and a placeholder ad unit (`<div class="ad-container">`).**
 
-### 3. Basic CSS Styling for `rps-style.css` (Modified for Image Input)
+### 3. Basic CSS Styling for `rps-style.css` (Modified for Image Input, Back Button, and AdSense)
 *   Initialized basic styling for the body.
 *   **Hid the `<video>` element.**
 *   **Added styles for `#image-upload` and `#uploaded-image`.**
 *   Styled prediction display, computer choice, outcome, and scoreboard.
 *   Incorporated theme variables for dark/light mode.
 *   **Renamed `#start-game-btn` styles to `#predict-btn`.**
+*   **Added styles for `.back-button` to position it in the top left corner.**
+*   **Added styles for `.ad-container`.**
+*   **Added styles for `.content-section` (for About/Privacy pages).**
 
 ### 4. Teachable Machine Model Integration (in `rps-main.js`) (Modified for Image Input)
 *   Loaded TensorFlow.js and the Teachable Machine library via CDN.
@@ -50,7 +55,18 @@ The current application is a Lotto Number Generator with dark/light mode toggle 
     *   Image upload triggers `handleImageUpload` to display image and enable "Predict from Image" button.
     *   Clicking "Predict from Image" triggers `predictAndPlay`, which makes a prediction and plays a round.
 
-### 6. Git Workflow (Pending)
+### 6. Optimizing for AdSense Approval & Adding Informational Pages
+*   **Created `about.html`:** Provides information about the site and its purpose.
+*   **Created `privacy.html`:** Details privacy practices, data handling, and AdSense/Teachable Machine usage.
+*   **Modified `index.html`:**
+    *   **Added a footer with links to `about.html` and `privacy.html`.**
+    *   **Added Google AdSense script to `<head>` and a placeholder ad unit (`<div class="ad-container">`).**
+*   **Modified `style.css`:**
+    *   **Added styles for the footer and footer links (`.footer-link`).**
+    *   **Added styles for `.content-section` (used in About/Privacy pages).**
+    *   **Added styles for `.ad-container`.**
+
+### 7. Git Workflow (Pending)
 *   Stage all new/modified files.
 *   Commit with a descriptive message.
 *   Push to remote repository.

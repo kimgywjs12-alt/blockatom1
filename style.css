@@ -208,3 +208,29 @@ body.dark-mode .contact-form button[type="submit"]:hover {
     text-align: center;
 }
 
+/* Footer Styles */
+footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--secondary-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+.footer-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: oklch(70% 0.25 260);
+}
+
+/* New Theme Toggle Text Styles */
+
