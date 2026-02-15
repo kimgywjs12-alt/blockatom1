@@ -1,73 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7207595394524551"
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coin Persona (Crypto MBTI) – Fun Finance Quiz</title>
+  <meta name="description" content="A bilingual (KR/EN) finance & crypto persona quiz for fun. Not financial advice." />
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7207595394524551"
      crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZFCE9YV35"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZFCE9YV35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'G-ZZFCE9YV35');
-    </script>
+    gtag('config', 'G-ZZFCE9YV35');
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1 id="t_title">Coin Persona</h1>
+          <p id="t_sub" class="muted">30문항으로 보는 나의 투자 성향 (오락용)</p>
+        </div>
+      </div>
+      <div class="right">
+        <div class="pill" title="Language">
+          <span aria-hidden="true">🌐</span>
+          <select id="langSel" aria-label="Language">
+            <option value="ko">한국어</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <button class="btn" id="btnResetTop">↺ <span id="t_reset">초기화</span></button>
+      </div>
+    </header>
+
     <div class="container">
-        <span id="theme-toggle-text" class="theme-toggle-text">Dark Mode</span>
-        <a href="rps.html" class="rps-game">Play RPS Game</a>
-        <h1>Lotto Number Generator</h1>
-        <!-- AdSense Ad Unit Placeholder -->
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-7207595394524551"
-                 data-ad-slot="YOUR_AD_SLOT_ID"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        <div class="lotto-machine">
-            <div class="number-display"></div>
-            <button id="generate-btn">Generate Numbers</button>
-        </div>
-        <div class="history">
-            <h2>History</h2>
-            <ul id="history-list"></ul>
-        </div>
-
-        <div id="contact-form" class="contact-form">
-            <h2>Partnership Inquiry</h2>
-            <form action="https://formspree.io/f/xpqjdpyw" method="POST">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
-                <button type="submit">Send Inquiry</button>
-            </form>
+      <!-- Main -->
+      <div class="card" id="mainCard">
+        <div class="hero">
+          <div class="row">
+            <div>
+              <div class="badge"><span aria-hidden="true">⚠️</span><span id="t_disclaimer">이 테스트는 재미를 위한 것이며 투자 조언이 아닙니다.</span></div>
+              <div class="progress" aria-label="Progress"><div class="bar" id="progBar"></div></div>
+              <div class="kpi">
+                <div class="k">
+                  <div class="t" id="t_qno">문항</div>
+                  <div class="v" id="qNo">1 / 30</div>
+                </div>
+                <div class="k">
+                  <div class="t" id="t_axis">축(4D)</div>
+                  <div class="v" id="axisHint">Risk • Horizon • Signal • Portfolio</div>
+                </div>
+              </div>
+            </div>
+            <div class="badge" id="stageBadge"><span aria-hidden="true">🧠</span><span id="t_stage">진단 중</span></div>
+          </div>
         </div>
 
-        <footer>
-            <p>&copy; 2026 Your Site Name. All rights reserved.</p>
-            <p>
-                <a href="about.html" class="footer-link">About Us</a> |
-                <a href="privacy.html" class="footer-link">Privacy Policy</a>
-            </p>
-        </footer>
+        <div class="qbox" id="content">
+          <!-- Filled by JS -->
+        </div>
+
+        <div class="actions" id="actions">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Side -->
+      <div class="side">
+        <div class="card">
+          <div class="pad">
+            <div class="h2" id="t_sideTitle">오늘의 콘텐츠</div>
+            <div class="muted small" id="t_sideDesc">
+              결과 페이지에서 “나에게 맞는 학습/콘텐츠”를 추천합니다. (오락/학습용)
+            </div>
+            <ul class="list small" id="sideList">
+              <li id="t_side1">✅ 3분: 수익률 vs 변동성 감각 테스트</li>
+              <li id="t_side2">✅ 2분: 내 리스크 허용도 레벨</li>
+              <li id="t_side3">✅ 1분: “나는 분산파?” 체크</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slot" id="adSlot1">
+          <div>
+            <div style="font-weight:900; margin-bottom:6px;">Ad Slot (Top)</div>
+            <div class="small">여기에 AdSense/광고 스크립트를 붙이세요.</div>
+          </div>
+        </div>
+
+        <div class="slot" id="adSlot2">
+          <div>
+            <div style="font-weight:900; margin-bottom:6px;">Ad Slot (Mid)</div>
+            <div class="small">모바일에서는 아래로 내려옵니다.</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <template id="lotto-ball-template">
-        <div class="lotto-ball"></div>
-    </template>
-    <script src="main.js"></script>
+
+    <footer>
+      <div id="t_footer1">본 페이지는 샘플 템플릿입니다. 개인정보를 수집하지 않습니다(기본값).</div>
+      <div id="t_footer2">광고/분석 도구를 붙일 경우, 쿠키/개인정보 고지 및 동의 UX는 법적 요구사항을 확인해야 합니다.</div>
+    </footer>
+
+    <div class="toast" id="toast">Copied!</div>
+  </div>
+
+<script src="main.js"></script>
 </body>
 </html>
