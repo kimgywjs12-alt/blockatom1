@@ -1,77 +1,43 @@
-# Blueprint for Rock-Paper-Scissors Game with Teachable Machine
+# Blueprint for Coin Persona (Crypto MBTI) Quiz
 
 ## Project Overview
-This project will create a web-based Rock-Paper-Scissors game where the user's hand gestures are recognized using a pre-trained Teachable Machine model. The game will display the user's recognized gesture, the computer's random choice, the outcome of each round, and a persistent scoreboard.
+This project aims to create a web-based "Coin Persona" quiz, also referred to as a "Crypto MBTI" quiz. It will guide users through a series of questions to determine their investment personality based on dimensions like Risk, Horizon, Signal, and Portfolio. The site will be bilingual (Korean/English) and will include a theme-switching functionality, Google AdSense integration, and Google Analytics for tracking.
 
 ## Current Application State
-The current application is a Lotto Number Generator with dark/light mode toggle and a Formspree contact form. This new RPS game is a separate, distinct application. I have created a new `rps.html` file as the entry point for the RPS game, and linked it from `index.html` for easy access. The existing `index.html` and its associated files remain untouched, ensuring minimal disruption to the existing functionality.
+The project currently provides the HTML structure (`index.html`) and styling (`style.css`) for the "Coin Persona" quiz. It includes header, main content area with placeholders for questions, progress bar, KPI metrics, and a side panel. Theme switching functionality is implemented in `main.js`. Informational pages (`about.html`, `privacy.html`) and Google Analytics are also integrated. The site is intended to be a quiz application, not a Rock-Paper-Scissors game.
 
-## Plan for Current Task: Integrating Google Analytics (gtag.js)
+## Plan for Current Task: Implementing the Coin Persona Quiz Logic
 
-### 1. Create `rps.html` and link it from `index.html` (Completed)
-*   Created `rps.html` to host the RPS game.
-*   Added a link to `rps.html` in `index.html` for navigation.
+### 1. Define Quiz Data
+*   Structure the quiz questions, answer options, and their associated impact on "Coin Persona" dimensions (Risk, Horizon, Signal, Portfolio). This data will be stored in a JavaScript object or array.
 
-### 2. Basic HTML Structure for `rps.html` (Modified for Image Input, Back Button, and AdSense)
-*   Included necessary meta tags and title.
-*   Linked to `rps-style.css` and `rps-main.js`.
-*   **Replaced `<video>` with `<input type="file" id="image-upload">` and `<img id="uploaded-image">` for image display.**
-*   **Added `<canvas id="canvas" style="display:none;">` for model input.**
-*   Elements to show user's prediction (Rock/Paper/Scissors).
-*   Elements to show computer's choice.
-*   Elements to display round outcome (Win/Lose/Draw).
-*   Scoreboard (Player Score, Computer Score, Draws).
-*   **Renamed button to `id="predict-btn"` with text "Predict from Image".**
-*   **Added "Back to Lotto" button (`<a href="index.html" id="back-to-lotto" class="back-button">`).**
-*   **Added Google AdSense script to `<head>` and a placeholder ad unit (`<div class="ad-container">`).**
-*   **Added Google Analytics (gtag.js) script to `<head>`.**
+### 2. Initialize Quiz State
+*   Set up initial quiz state variables: current question index, user's scores for each dimension, etc.
 
-### 3. Basic CSS Styling for `rps-style.css` (Modified for Image Input, Back Button, and AdSense)
-*   Initialized basic styling for the body.
-*   **Hid the `<video>` element.**
-*   **Added styles for `#image-upload` and `#uploaded-image`.**
-*   Styled prediction display, computer choice, outcome, and scoreboard.
-*   Incorporated theme variables for dark/light mode.
-*   **Renamed `#start-game-btn` styles to `#predict-btn`.**
-*   **Added styles for `.back-button` to position it in the top left corner.**
-*   **Added styles for `.ad-container`.**
-*   **Added styles for `.content-section` (for About/Privacy pages).**
+### 3. Render Questions and Options
+*   Create functions to dynamically display the current question and its options in `index.html`'s `#content` area.
+*   Handle user interaction with options (e.g., clicking on an answer).
 
-### 4. Teachable Machine Model Integration (in `rps-main.js`) (Modified for Image Input)
-*   Loaded TensorFlow.js and the Teachable Machine library via CDN.
-*   Defined the model URL (`https://teachablemachine.withgoogle.com/models/vzIPAnZ10/`).
-*   Asynchronously loaded the model and its metadata.
-*   **Removed webcam setup and continuous loop for predictions.**
-*   **Added `handleImageUpload` function to read and display selected image, and enable `predict-btn`.**
-*   **Modified `predictAndPlay` function to draw `uploaded-image` onto `canvas` and use `canvas` as input for `model.predict()`.**
-*   **Prediction is now triggered by `predict-btn` click.**
-*   Mapped prediction probabilities to Rock, Paper, Scissors, with a confidence threshold.
+### 4. Process User Answers
+*   Update the user's scores based on the selected answer for each question.
+*   Advance to the next question or determine the final result if the quiz is complete.
 
-### 5. Game Logic (in `rps-main.js`) (Adapted)
-*   Game State Management: Variables for player score, computer score, draws.
-*   Computer's Turn: Function to randomly select Rock, Paper, or Scissors for the computer.
-*   Determine Winner: Function to compare player's choice (from TM prediction) and computer's choice.
-*   Update UI: Functions to update prediction display, computer choice display, outcome message, and scoreboard.
-*   Game Flow:
-    *   Image upload triggers `handleImageUpload` to display image and enable "Predict from Image" button.
-    *   Clicking "Predict from Image" triggers `predictAndPlay`, which makes a prediction and plays a round.
+### 5. Update UI (Progress, KPIs)
+*   Dynamically update the progress bar (`#progBar`).
+*   Update the current question number (`#qNo`).
+*   Potentially update the `axisHint` or other KPI elements as the quiz progresses.
 
-### 6. Optimizing for AdSense Approval & Adding Informational Pages
-*   **Created `about.html`:** Provides information about the site and its purpose.
-*   **Created `privacy.html`:** Details privacy practices, data handling, and AdSense/Teachable Machine usage.
-*   **Modified `index.html`:**
-    *   **Added a footer with links to `about.html` and `privacy.html`.**
-    *   **Added Google AdSense script to `<head>` and a placeholder ad unit (`<div class="ad-container">`).**
-    *   **Added Google Analytics (gtag.js) script to `<head>`.**
-*   **Modified `style.css`:**
-    *   **Added styles for the footer and footer links (`.footer-link`).**
-    *   **Added styles for `.content-section` (used in About/Privacy pages).**
-    *   **Added styles for `.ad-container`.**
+### 6. Calculate and Display Results
+*   Develop logic to interpret the final scores and determine the user's "Coin Persona" type.
+*   Render a dedicated results screen, showing the persona type and a description.
 
-### 7. Integrating Google Analytics (gtag.js)
-*   **Added gtag.js script to the `<head>` of `index.html`, `rps.html`, `about.html`, and `privacy.html`.**
+### 7. Implement Language Switching
+*   Ensure all dynamic text (questions, options, results, UI labels) can be switched between Korean and English based on the `#langSel` selection.
 
-### 8. Git Workflow (Pending)
-*   Stage all new/modified files.
+### 8. Quiz Reset Functionality
+*   Implement the logic for the "Reset" button (`#btnResetTop`) to restart the quiz.
+
+### 9. Git Workflow & Deployment
+*   Stage all new/modified files (`main.js`, possibly `style.css` if updates are needed, and `blueprint.md`).
 *   Commit with a descriptive message.
-*   Push to remote repository.
+*   Push to remote repository for deployment.
